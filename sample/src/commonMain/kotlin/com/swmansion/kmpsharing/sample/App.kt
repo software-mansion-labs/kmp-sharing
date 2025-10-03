@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.swmansion.kmpsharing.Sharing
+import com.swmansion.kmpsharing.SharingOptions
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -24,7 +25,22 @@ fun App() {
                     .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(onClick = { Sharing.share(url = "utils/dog.jpg") }) { Text("Share a file!") }
+            Button(
+                onClick = {
+                    Sharing.share(
+                        // Remember: URL must start with "file://" and point to a file that exists
+                        // on the device
+                        url = "file:///data/data/com.swmansion.kmpsharing.sample/files/dog.jpg",
+                        options =
+                            SharingOptions(
+                                androidDialogTitle = "Share Dog Image",
+                                androidMimeType = "image/jpeg",
+                            ),
+                    )
+                }
+            ) {
+                Text("Share a file!")
+            }
         }
     }
 }
