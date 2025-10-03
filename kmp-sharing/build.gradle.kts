@@ -12,6 +12,8 @@ kotlin {
     jvmToolchain(17)
     androidTarget()
 
+    compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
+
     listOf(iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "kmp-sharing"
