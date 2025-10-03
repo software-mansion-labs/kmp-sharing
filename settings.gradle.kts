@@ -29,4 +29,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":sample")
+include(":kmp-sharing", ":sample")
