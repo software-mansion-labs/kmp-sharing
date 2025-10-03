@@ -11,7 +11,7 @@ kotlin {
     explicitApi()
     jvmToolchain(17)
     androidTarget()
-    
+
     listOf(iosArm64(), iosSimulatorArm64()).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "kmp-sharing"
@@ -29,8 +29,7 @@ kotlin {
             implementation(libs.jetBrains.androidX.lifecycle.runtimeCompose)
             implementation(libs.jetBrains.androidX.lifecycle.viewmodelCompose)
         }
-        androidMain.dependencies {
-        }
+        androidMain.dependencies {}
     }
 }
 
