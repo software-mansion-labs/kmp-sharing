@@ -43,8 +43,6 @@ fun App() {
                                 SharingOptions(
                                     androidDialogTitle = "Share Dog Image",
                                     androidMimeType = "image/jpeg",
-                                    iosAnchor =
-                                        Anchor(x = 100f, y = 100f, width = 200f, height = 50f),
                                 ),
                         )
                     },

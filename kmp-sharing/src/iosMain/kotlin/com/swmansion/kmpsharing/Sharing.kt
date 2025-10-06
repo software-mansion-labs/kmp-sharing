@@ -14,17 +14,31 @@ public actual fun share(url: String, options: SharingOptions?) {
         val activityViewController =
             UIActivityViewController(activityItems = activityItems, applicationActivities = null)
 
-        options?.iosAnchor?.let { anchor ->
-            activityViewController.popoverPresentationController?.let { popover ->
-                popover.sourceView = UIApplication.sharedApplication.keyWindow
-                popover.sourceRect =
-                    platform.CoreGraphics.CGRectMake(
-                        anchor.x.toDouble(),
-                        anchor.y.toDouble(),
-                        anchor.width.toDouble(),
-                        anchor.height.toDouble(),
-                    )
-            }
+        val anchor =
+            options?.iosAnchor
+                ?: run {
+                    val screenBounds = UIScreen.mainScreen.bounds
+                    screenBounds.useContents {
+                        val centerX = size.width / 2.0
+                        val centerY = size.height / 2.0
+                        Anchor(
+                            x = centerX.toFloat(),
+                            y = centerY.toFloat(),
+                            width = 200f,
+                            height = 50f,
+                        )
+                    }
+                }
+
+        activityViewController.popoverPresentationController?.let { popover ->
+            popover.sourceView = UIApplication.sharedApplication.keyWindow
+            popover.sourceRect =
+                platform.CoreGraphics.CGRectMake(
+                    anchor.x.toDouble(),
+                    anchor.y.toDouble(),
+                    anchor.width.toDouble(),
+                    anchor.height.toDouble(),
+                )
         }
 
         val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
