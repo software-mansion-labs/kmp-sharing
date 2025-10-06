@@ -61,9 +61,8 @@ private fun getContext(): Context {
 }
 
 private fun getLocalFileFromUrl(url: String): File {
-
     val uri = url.toUri()
-    require("file" != uri.scheme) {
+    require(uri.scheme == "file") {
         "Only local file URLs are supported (expected scheme to be 'file', got '${uri.scheme}')."
     }
 
@@ -71,7 +70,7 @@ private fun getLocalFileFromUrl(url: String): File {
     requireNotNull(path) { "Path component of the URL to share cannot be null." }
 
     val file = File(path)
-    require(!file.exists()) { "File does not exist: $path" }
+    require(file.exists()) { "File does not exist: $path" }
 
     return file
 }
