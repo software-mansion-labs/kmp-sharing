@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.swmansion.kmpsharing.Anchor
 import com.swmansion.kmpsharing.SharingOptions
 import com.swmansion.kmpsharing.share
 import org.jetbrains.compose.ui.tooling.preview.Preview

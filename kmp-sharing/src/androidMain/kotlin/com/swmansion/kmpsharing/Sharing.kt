@@ -15,7 +15,11 @@ public actual fun share(url: String, options: SharingOptions?) {
         val file = getLocalFileFromUrl(url)
 
         val contentUri =
-            FileProvider.getUriForFile(androidContext, "${androidContext.packageName}.fileprovider", file)
+            FileProvider.getUriForFile(
+                androidContext,
+                "${androidContext.packageName}.fileprovider",
+                file,
+            )
 
         val mimeType =
             options.androidMimeType ?: URLConnection.guessContentTypeFromName(file.name) ?: "*/*"
@@ -41,7 +45,7 @@ public actual fun share(url: String, options: SharingOptions?) {
 private fun getLocalFileFromUrl(url: String): File {
     val uri = url.toUri()
     require(uri.scheme == "file") {
-            "Only local file URLs are supported (expected scheme to be 'file', got '${uri.scheme}')."
+        "Only local file URLs are supported (expected scheme to be 'file', got '${uri.scheme}')."
     }
 
     val path = uri.path
