@@ -55,6 +55,7 @@ dokka {
             externalDocumentationLinks {
                 register("coroutines") { url("https://kotlinlang.org/api/kotlinx.coroutines") }
             }
+            includes.from("$rootDir/docs/QUICK_START.md")
         }
     }
 
