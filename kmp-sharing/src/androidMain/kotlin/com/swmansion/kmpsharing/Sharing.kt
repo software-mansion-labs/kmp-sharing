@@ -10,37 +10,43 @@ import java.io.File
 import java.net.URLConnection
 
 @Composable
-public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Unit {
+public actual fun rememberShare(): Share {
     val context = LocalContext.current
     return remember {
-        { url: String, options: SharingOptions? ->
-            try {
-                val file = getLocalFileFromUrl(url)
-                val contentUri =
-                    FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+        object : Share {
+            override fun invoke(url: String, options: SharingOptions?) {
+                try {
+                    val file = getLocalFileFromUrl(url)
+                    val contentUri =
+                        FileProvider.getUriForFile(
+                            context,
+                            "${context.packageName}.fileprovider",
+                            file,
+                        )
 
-                val mimeType =
-                    options?.androidMimeType
-                        ?: URLConnection.guessContentTypeFromName(file.name)
-                        ?: "*/*"
+                    val mimeType =
+                        options?.androidMimeType
+                            ?: URLConnection.guessContentTypeFromName(file.name)
+                            ?: "*/*"
 
-                val intent =
-                    Intent(Intent.ACTION_SEND).apply {
-                        putExtra(Intent.EXTRA_STREAM, contentUri)
-                        setTypeAndNormalize(mimeType)
-                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    val intent =
+                        Intent(Intent.ACTION_SEND).apply {
+                            putExtra(Intent.EXTRA_STREAM, contentUri)
+                            setTypeAndNormalize(mimeType)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-                        options?.androidDialogTitle?.let { title ->
-                            putExtra(Intent.EXTRA_TEXT, title)
+                            options?.androidDialogTitle?.let { title ->
+                                putExtra(Intent.EXTRA_TEXT, title)
+                            }
                         }
-                    }
 
-                val chooser = Intent.createChooser(intent, options?.androidDialogTitle ?: "Share")
-                chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-                context.startActivity(chooser)
-            } catch (e: Exception) {
-                throw RuntimeException("Failed to share: ${e.message}", e)
+                    context.startActivity(
+                        Intent.createChooser(intent, options?.androidDialogTitle ?: "Share")
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    )
+                } catch (e: Exception) {
+                    throw RuntimeException("Failed to share: ${e.message}", e)
+                }
             }
         }
     }

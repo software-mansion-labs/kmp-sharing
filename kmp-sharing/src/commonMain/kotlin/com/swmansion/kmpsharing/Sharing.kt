@@ -2,4 +2,8 @@ package com.swmansion.kmpsharing
 
 import androidx.compose.runtime.Composable
 
-@Composable public expect fun rememberShare(): (url: String, options: SharingOptions?) -> Unit
+public interface Share {
+    public operator fun invoke(url: String, options: SharingOptions? = null)
+}
+
+@Composable public expect fun rememberShare(): Share

@@ -39,8 +39,8 @@ fun App() {
                         share(
                             // Remember: URL must start with "file://" and point to a file that
                             // exists on the device
-                            "YOUR_LOCAL_URL",
-                            SharingOptions(
+                            url = "YOUR_LOCAL_URL",
+                            options = SharingOptions(
                                 androidDialogTitle = "Share Dog Image",
                                 androidMimeType = "image/jpeg",
                             ),

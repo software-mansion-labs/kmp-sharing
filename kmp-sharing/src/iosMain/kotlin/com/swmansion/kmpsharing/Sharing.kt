@@ -3,14 +3,15 @@ package com.swmansion.kmpsharing
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import kotlinx.cinterop.*
+import platform.CoreGraphics.CGRectMake
 import platform.Foundation.*
 import platform.UIKit.*
 
 @Composable
 @OptIn(ExperimentalForeignApi::class)
-public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Unit {
-    return remember {
-        { url: String, options: SharingOptions? ->
+public actual fun rememberShare(): Share = remember {
+    object : Share {
+        override fun invoke(url: String, options: SharingOptions?) {
             try {
                 val nsUrl = NSURL.URLWithString(url)
                 requireNotNull(nsUrl) { "Invalid URL: $url" }
@@ -41,7 +42,7 @@ public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Un
                 activityViewController.popoverPresentationController?.let { popover ->
                     popover.sourceView = UIApplication.sharedApplication.keyWindow
                     popover.sourceRect =
-                        platform.CoreGraphics.CGRectMake(
+                        CGRectMake(
                             anchor.x.toDouble(),
                             anchor.y.toDouble(),
                             anchor.width.toDouble(),
