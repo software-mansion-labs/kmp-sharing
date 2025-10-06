@@ -1,6 +1,5 @@
 package com.swmansion.kmpsharing
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.FileProvider
@@ -9,16 +8,17 @@ import java.io.File
 import java.net.URLConnection
 
 public actual fun share(url: String, options: SharingOptions?) {
-    val context = getContext()
+    val androidContext = options?.androidContext as? Context
+    requireNotNull(androidContext) { "Context is required for Android" }
 
     try {
         val file = getLocalFileFromUrl(url)
 
         val contentUri =
-            FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+            FileProvider.getUriForFile(androidContext, "${androidContext.packageName}.fileprovider", file)
 
         val mimeType =
-            options?.androidMimeType ?: URLConnection.guessContentTypeFromName(file.name) ?: "*/*"
+            options.androidMimeType ?: URLConnection.guessContentTypeFromName(file.name) ?: "*/*"
 
         val intent =
             Intent(Intent.ACTION_SEND).apply {
@@ -26,44 +26,22 @@ public actual fun share(url: String, options: SharingOptions?) {
                 setTypeAndNormalize(mimeType)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-                options?.androidDialogTitle?.let { title -> putExtra(Intent.EXTRA_TEXT, title) }
+                options.androidDialogTitle?.let { title -> putExtra(Intent.EXTRA_TEXT, title) }
             }
 
-        val chooser = Intent.createChooser(intent, options?.androidDialogTitle ?: "Share")
+        val chooser = Intent.createChooser(intent, options.androidDialogTitle ?: "Share")
         chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        context.startActivity(chooser)
+        androidContext.startActivity(chooser)
     } catch (e: Exception) {
         throw RuntimeException("Failed to share: ${e.message}", e)
-    }
-}
-
-@SuppressLint("PrivateApi")
-private fun getContext(): Context {
-    return try {
-        val applicationClass = Class.forName("android.app.ActivityThread")
-        val currentApplication =
-            applicationClass.getMethod("currentApplication").invoke(null) as? Context
-
-        if (currentApplication != null) {
-            currentApplication
-        } else {
-            val activityThread = applicationClass.getMethod("currentActivityThread").invoke(null)
-            val app =
-                activityThread?.javaClass?.getMethod("getApplication")?.invoke(activityThread)
-                    as? Context
-            requireNotNull(app) { "Could not get application context" }
-            app
-        }
-    } catch (e: Exception) {
-        throw IllegalStateException("Could not get Android context automatically.", e)
     }
 }
 
 private fun getLocalFileFromUrl(url: String): File {
     val uri = url.toUri()
     require(uri.scheme == "file") {
-        "Only local file URLs are supported (expected scheme to be 'file', got '${uri.scheme}')."
+            "Only local file URLs are supported (expected scheme to be 'file', got '${uri.scheme}')."
     }
 
     val path = uri.path

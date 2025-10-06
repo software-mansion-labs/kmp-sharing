@@ -25,7 +25,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun App(context: Any? = null) {
     MaterialTheme {
         Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             Column(
@@ -41,6 +41,7 @@ fun App() {
                             url = "YOUR_LOCAL_DEVICE_URL",
                             options =
                                 SharingOptions(
+                                    androidContext = context,
                                     androidDialogTitle = "Share Dog Image",
                                     androidMimeType = "image/jpeg",
                                 ),

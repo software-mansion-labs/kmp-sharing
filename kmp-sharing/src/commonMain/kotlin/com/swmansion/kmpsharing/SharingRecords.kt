@@ -1,8 +1,8 @@
 package com.swmansion.kmpsharing
-
 public data class SharingOptions(
     val iosAnchor: Anchor? = null,
     val iosUTI: String? = null,
+    val androidContext: Any? = null,
     val androidDialogTitle: String? = null,
     val androidMimeType: String? = null,
 )
