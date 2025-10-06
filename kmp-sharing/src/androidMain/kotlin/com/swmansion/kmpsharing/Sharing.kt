@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import java.io.File
 import java.net.URLConnection
 
+/** Android implementation of the rememberShare function. */
 @Composable
 public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Unit {
     val context = LocalContext.current

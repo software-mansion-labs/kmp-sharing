@@ -3,9 +3,11 @@ package com.swmansion.kmpsharing
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import kotlinx.cinterop.*
+import platform.CoreGraphics.CGRectMake
 import platform.Foundation.*
 import platform.UIKit.*
 
+/** iOS implementation of the rememberShare function. */
 @Composable
 @OptIn(ExperimentalForeignApi::class)
 public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Unit {
@@ -41,7 +43,7 @@ public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Un
                 activityViewController.popoverPresentationController?.let { popover ->
                     popover.sourceView = UIApplication.sharedApplication.keyWindow
                     popover.sourceRect =
-                        platform.CoreGraphics.CGRectMake(
+                        CGRectMake(
                             anchor.x.toDouble(),
                             anchor.y.toDouble(),
                             anchor.width.toDouble(),
