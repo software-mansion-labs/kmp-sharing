@@ -19,12 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.swmansion.kmpsharing.SharingOptions
-import com.swmansion.kmpsharing.share
+import com.swmansion.kmpsharing.rememberShare
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
+    val share = rememberShare()
+
     MaterialTheme {
         Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             Column(
@@ -37,7 +39,7 @@ fun App() {
                         share(
                             // Remember: URL must start with "file://" and point to a file that
                             // exists on the device
-                            url = "YOUR_LOCAL_DEVICE_URL",
+                            url = "YOUR_LOCAL_URL",
                             options =
                                 SharingOptions(
                                     androidDialogTitle = "Share Dog Image",

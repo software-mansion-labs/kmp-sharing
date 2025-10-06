@@ -1,62 +1,54 @@
 package com.swmansion.kmpsharing
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import java.io.File
 import java.net.URLConnection
 
-public actual fun share(url: String, options: SharingOptions?) {
-    val context = getContext()
+@Composable
+public actual fun rememberShare(): Share {
+    val context = LocalContext.current
+    return remember {
+        object : Share {
+            override fun invoke(url: String, options: SharingOptions?) {
+                try {
+                    val file = getLocalFileFromUrl(url)
+                    val contentUri =
+                        FileProvider.getUriForFile(
+                            context,
+                            "${context.packageName}.fileprovider",
+                            file,
+                        )
 
-    try {
-        val file = getLocalFileFromUrl(url)
+                    val mimeType =
+                        options?.androidMimeType
+                            ?: URLConnection.guessContentTypeFromName(file.name)
+                            ?: "*/*"
 
-        val contentUri =
-            FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+                    val intent =
+                        Intent(Intent.ACTION_SEND).apply {
+                            putExtra(Intent.EXTRA_STREAM, contentUri)
+                            setTypeAndNormalize(mimeType)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-        val mimeType =
-            options?.androidMimeType ?: URLConnection.guessContentTypeFromName(file.name) ?: "*/*"
+                            options?.androidDialogTitle?.let { title ->
+                                putExtra(Intent.EXTRA_TEXT, title)
+                            }
+                        }
 
-        val intent =
-            Intent(Intent.ACTION_SEND).apply {
-                putExtra(Intent.EXTRA_STREAM, contentUri)
-                setTypeAndNormalize(mimeType)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-                options?.androidDialogTitle?.let { title -> putExtra(Intent.EXTRA_TEXT, title) }
+                    context.startActivity(
+                        Intent.createChooser(intent, options?.androidDialogTitle ?: "Share")
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    )
+                } catch (e: Exception) {
+                    throw RuntimeException("Failed to share: ${e.message}", e)
+                }
             }
-
-        val chooser = Intent.createChooser(intent, options?.androidDialogTitle ?: "Share")
-        chooser.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-        context.startActivity(chooser)
-    } catch (e: Exception) {
-        throw RuntimeException("Failed to share: ${e.message}", e)
-    }
-}
-
-@SuppressLint("PrivateApi")
-private fun getContext(): Context {
-    return try {
-        val applicationClass = Class.forName("android.app.ActivityThread")
-        val currentApplication =
-            applicationClass.getMethod("currentApplication").invoke(null) as? Context
-
-        if (currentApplication != null) {
-            currentApplication
-        } else {
-            val activityThread = applicationClass.getMethod("currentActivityThread").invoke(null)
-            val app =
-                activityThread?.javaClass?.getMethod("getApplication")?.invoke(activityThread)
-                    as? Context
-            requireNotNull(app) { "Could not get application context" }
-            app
         }
-    } catch (e: Exception) {
-        throw IllegalStateException("Could not get Android context automatically.", e)
     }
 }
 
