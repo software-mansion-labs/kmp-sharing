@@ -40,10 +40,11 @@ fun App() {
                             // Remember: URL must start with "file://" and point to a file that
                             // exists on the device
                             url = "YOUR_LOCAL_URL",
-                            options = SharingOptions(
-                                androidDialogTitle = "Share Dog Image",
-                                androidMimeType = "image/jpeg",
-                            ),
+                            options =
+                                SharingOptions(
+                                    androidDialogTitle = "Share Dog Image",
+                                    androidMimeType = "image/jpeg",
+                                ),
                         )
                     },
                     modifier = Modifier.height(56.dp).width(200.dp),
