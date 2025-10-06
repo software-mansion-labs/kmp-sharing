@@ -1,6 +1,5 @@
 package com.swmansion.kmpsharing
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -11,7 +10,6 @@ import java.io.File
 import java.net.URLConnection
 
 @Composable
-@SuppressLint("ComposableNaming")
 public actual fun share(url: String, options: SharingOptions?): () -> Unit {
     val context = LocalContext.current
     return remember {
