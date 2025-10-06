@@ -6,7 +6,7 @@ Universal sharing function for Compose Multiplatform.
 
 Check out the sample project in the `/sample` directory for complete usage examples.
 
-<video width="512" autoplay muted loop playsinline src="https://github.com/software-mansion/kmp-sharing/blob/main/docs/videos/kmp_sharing_preview.mp4?raw=true"></video>
+<video width="512" autoplay muted loop playsinline src="https://github.com/software-mansion-labs/kmp-sharing/blob/main/docs/videos/kmp_sharing_preview.mp4?raw=true"></video>
 
 ## ✨ Features
 
