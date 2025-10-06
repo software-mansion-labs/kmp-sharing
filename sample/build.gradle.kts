@@ -32,8 +32,8 @@ kotlin {
             implementation(compose.ui)
             implementation(libs.jetBrains.androidX.lifecycle.runtimeCompose)
             implementation(libs.jetBrains.androidX.lifecycle.viewmodelCompose)
+            implementation(project(":kmp-sharing"))
         }
-        commonTest.dependencies { implementation(libs.jetBrains.kotlin.test) }
     }
 }
 
