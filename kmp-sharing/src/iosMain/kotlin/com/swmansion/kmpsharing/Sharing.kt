@@ -7,12 +7,11 @@ import platform.CoreGraphics.CGRectMake
 import platform.Foundation.*
 import platform.UIKit.*
 
-/** iOS implementation of the rememberShare function. */
 @Composable
 @OptIn(ExperimentalForeignApi::class)
-public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Unit {
-    return remember {
-        { url: String, options: SharingOptions? ->
+public actual fun rememberShare(): Share = remember {
+    object : Share {
+        override fun invoke(url: String, options: SharingOptions?) {
             try {
                 val nsUrl = NSURL.URLWithString(url)
                 requireNotNull(nsUrl) { "Invalid URL: $url" }

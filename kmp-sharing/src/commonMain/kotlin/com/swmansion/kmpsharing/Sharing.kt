@@ -2,6 +2,17 @@ package com.swmansion.kmpsharing
 
 import androidx.compose.runtime.Composable
 
+/** Interface for sharing files */
+public interface Share {
+    /**
+     * Shares a file using the native sharing mechanism of the platform.
+     *
+     * @param url The file URL to share. Must be a local file URL (scheme: "file://")
+     * @param options Optional sharing configuration for platform-specific customization
+     */
+    public operator fun invoke(url: String, options: SharingOptions? = null)
+}
+
 /**
  * Remember a sharing function that uses the native sharing mechanism of the platform.
  *
@@ -46,13 +57,9 @@ import androidx.compose.runtime.Composable
  * - `content://...` (content URIs)
  * - Relative paths without `file://` scheme
  *
- * @return A stable callback function that accepts:
- *     - `url: String` - The file URL to share. Must be a local file URL (scheme: "file://")
- *     - `options: SharingOptions?` - Optional sharing configuration for platform-specific
- *       customization
- *
+ * @return A stable [Share] interface that can be invoked to share files
  * @throws IllegalArgumentException When the URL is invalid, file doesn't exist, or URL scheme is
  *   not "file://"
  * @throws RuntimeException When the sharing operation fails due to platform-specific errors
  */
-@Composable public expect fun rememberShare(): (url: String, options: SharingOptions?) -> Unit
+@Composable public expect fun rememberShare(): Share
