@@ -25,6 +25,18 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
+    val shareFunction =
+        share(
+            // Remember: URL must start with "file://" and point to a file that
+            // exists on the device
+            url = "YOUR_LOCAL_URL",
+            options =
+                SharingOptions(
+                    androidDialogTitle = "Share Dog Image",
+                    androidMimeType = "image/jpeg",
+                ),
+        )
+
     MaterialTheme {
         Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             Column(
@@ -33,18 +45,7 @@ fun App() {
                 verticalArrangement = Arrangement.Center,
             ) {
                 Button(
-                    onClick = {
-                        share(
-                            // Remember: URL must start with "file://" and point to a file that
-                            // exists on the device
-                            url = "YOUR_LOCAL_DEVICE_URL",
-                            options =
-                                SharingOptions(
-                                    androidDialogTitle = "Share Dog Image",
-                                    androidMimeType = "image/jpeg",
-                                ),
-                        )
-                    },
+                    onClick = { shareFunction.invoke() },
                     modifier = Modifier.height(56.dp).width(200.dp),
                     colors =
                         ButtonDefaults.buttonColors(
