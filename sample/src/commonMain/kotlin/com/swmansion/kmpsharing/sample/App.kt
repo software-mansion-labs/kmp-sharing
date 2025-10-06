@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.swmansion.kmpsharing.Anchor
-import com.swmansion.kmpsharing.Sharing
 import com.swmansion.kmpsharing.SharingOptions
+import com.swmansion.kmpsharing.share
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -35,7 +35,7 @@ fun App() {
             ) {
                 Button(
                     onClick = {
-                        Sharing.share(
+                        share(
                             // Remember: URL must start with "file://" and point to a file that
                             // exists on the device
                             url = "YOUR_LOCAL_DEVICE_URL",
