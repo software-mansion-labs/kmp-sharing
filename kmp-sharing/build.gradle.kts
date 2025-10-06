@@ -3,6 +3,7 @@ group = "com.swmansion.kmpsharing"
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetBrains.compose)
+    alias(libs.plugins.jetBrains.dokka)
     alias(libs.plugins.jetBrains.kotlin.multiplatform)
     alias(libs.plugins.jetBrains.kotlin.plugin.compose)
 }
@@ -44,5 +45,26 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+
+dokka {
+    dokkaSourceSets {
+        configureEach {
+            moduleName = "KMP Sharing"
+            externalDocumentationLinks {
+                register("coroutines") { url("https://kotlinlang.org/api/kotlinx.coroutines") }
+            }
+        }
+    }
+
+    pluginsConfiguration.html {
+        footerMessage =
+            """
+            © <a href="https://swmansion.com" rel="noopener noreferrer" target="_blank">Software Mansion</a> 2025. 
+            All trademarks and copyrights belong to their respective owners.
+            """
+                .trimIndent()
     }
 }
