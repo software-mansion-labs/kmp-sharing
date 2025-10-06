@@ -34,7 +34,7 @@ public actual fun share(url: String, options: SharingOptions?) {
 
         context.startActivity(chooser)
     } catch (e: Exception) {
-        throw SharingFailedException("Failed to share: ${e.message}", e)
+        throw RuntimeException("Failed to share: ${e.message}", e)
     }
 }
 
@@ -52,37 +52,26 @@ private fun getContext(): Context {
             val app =
                 activityThread?.javaClass?.getMethod("getApplication")?.invoke(activityThread)
                     as? Context
-
-            app ?: throw IllegalStateException("Could not get application context")
+            requireNotNull(app) { "Could not get application context" }
+            app
         }
     } catch (e: Exception) {
         throw IllegalStateException("Could not get Android context automatically.", e)
     }
 }
 
-@Throws(SharingInvalidArgumentException::class)
-private fun getLocalFileFromUrl(url: String?): File {
-    if (url == null) {
-        throw SharingInvalidArgumentException("URL to share cannot be null.")
-    }
+private fun getLocalFileFromUrl(url: String): File {
 
     val uri = url.toUri()
-    if ("file" != uri.scheme) {
-        throw SharingInvalidArgumentException(
-            "Only local file URLs are supported (expected scheme to be 'file', got '${uri.scheme}')."
-        )
+    require("file" != uri.scheme) {
+        "Only local file URLs are supported (expected scheme to be 'file', got '${uri.scheme}')."
     }
 
-    val path =
-        uri.path
-            ?: throw SharingInvalidArgumentException(
-                "Path component of the URL to share cannot be null."
-            )
+    val path = uri.path
+    requireNotNull(path) { "Path component of the URL to share cannot be null." }
 
     val file = File(path)
-    if (!file.exists()) {
-        throw SharingInvalidArgumentException("File does not exist: $path")
-    }
+    require(!file.exists()) { "File does not exist: $path" }
 
     return file
 }

@@ -7,8 +7,8 @@ import platform.UIKit.*
 @OptIn(ExperimentalForeignApi::class)
 public actual fun share(url: String, options: SharingOptions?) {
     try {
-        val nsUrl =
-            NSURL.URLWithString(url) ?: throw SharingInvalidArgumentException("Invalid URL: $url")
+        val nsUrl = NSURL.URLWithString(url)
+        requireNotNull(nsUrl) { "Invalid URL: $url" }
 
         val activityItems = listOf(nsUrl)
         val activityViewController =
@@ -27,9 +27,8 @@ public actual fun share(url: String, options: SharingOptions?) {
             }
         }
 
-        val rootViewController =
-            UIApplication.sharedApplication.keyWindow?.rootViewController
-                ?: throw SharingFailedException("Could not find root view controller")
+        val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
+        requireNotNull(rootViewController) { "Could not find root view controller" }
 
         rootViewController.presentViewController(
             activityViewController,
@@ -37,6 +36,6 @@ public actual fun share(url: String, options: SharingOptions?) {
             completion = null,
         )
     } catch (e: Exception) {
-        throw SharingFailedException("Failed to share: ${e.message}", e)
+        throw RuntimeException("Failed to share: ${e.message}", e)
     }
 }
