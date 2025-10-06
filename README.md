@@ -1,35 +1,66 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# KMP Sharing by Software Mansion
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+Universal sharing function for Compose Multiplatform.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## 🎯 See It in Action
 
-### Build and Run Android Application
+Check out the sample project in the `/sample` directory for complete usage examples.
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+<video width="512" autoplay muted loop playsinline src="https://github.com/software-mansion/kmp-sharing/blob/main/docs/videos/kmp_sharing_preview.mp4?raw=true"></video>
 
-### Build and Run iOS Application
+## ✨ Features
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+* **Cross-platform compatibility** - Single API for both Android and iOS
+* **Native performance** - Uses Android Intent system and iOS UIActivityViewController
+* **File sharing support** - Share local files with proper MIME type detection
+* **Customizable options** - Platform-specific customization options
+* **Compose integration** - Built with Compose Multiplatform for modern UI development
 
----
+## 🚀 Usage
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+```kotlin
+@Composable
+fun ShareButton() {
+    val share = rememberShare()
+    
+    Button(
+        onClick = {
+            share(
+                url = "file:///path/to/your/file.jpg",
+                options = SharingOptions(
+                    androidDialogTitle = "Share Image",
+                    androidMimeType = "image/jpeg",
+                    iosAnchor = Anchor(x = 100f, y = 100f, width = 200f, height = 50f)
+                )
+            )
+        }
+    ) {
+        Text("Share")
+    }
+}
+```
+
+## 📚 Documentation
+
+Check out our [dedicated documentation page](google.com) for installation instructions, API reference and more.
+
+## 🤝 Contributing
+
+We welcome contributions! Please feel free to submit a Pull Request.
+
+## KMP Sharing is created by Software Mansion
+
+[![swm](https://logo.swmansion.com/logo?color=white&variant=desktop&width=150&tag=typegpu-github 'Software Mansion')](https://swmansion.com)
+
+Since 2012 [Software Mansion](https://swmansion.com) is a software agency with
+experience in building web and mobile apps. We are Core React Native
+Contributors and experts in dealing with all kinds of React Native issues. We
+can help you build your next dream product –
+[Hire us](https://swmansion.com/contact/projects?utm_source=typegpu&utm_medium=readme).
+
+Made by [@software-mansion](https://github.com/software-mansion) and
+[community](https://github.com/software-mansion-labs/kmp-sharing/graphs/contributors) 💛
+<br><br>
+<a href="https://github.com/software-mansion-labs/kmp-sharing/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=software-mansion-labs/kmp-sharing" />
+</a>

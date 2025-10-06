@@ -48,7 +48,6 @@ android {
     }
 }
 
-
 dokka {
     dokkaSourceSets {
         configureEach {
