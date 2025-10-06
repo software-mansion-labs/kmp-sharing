@@ -1,3 +1,5 @@
 package com.swmansion.kmpsharing
 
-public expect fun share(url: String, options: SharingOptions? = null)
+import androidx.compose.runtime.Composable
+
+@Composable public expect fun Share(url: String, options: SharingOptions?): () -> Unit
