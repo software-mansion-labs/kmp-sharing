@@ -11,7 +11,7 @@ kotlin = "2.2.20"
 
 [libraries]
 androidX-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidXActivity" }
-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+androidX-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 jetBrains-androidX-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidXLifecycle" }
 jetBrains-androidX-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidXLifecycle" }
 jetBrains-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

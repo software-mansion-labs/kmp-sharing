@@ -31,7 +31,7 @@ kotlin {
             implementation(libs.jetBrains.androidX.lifecycle.runtimeCompose)
             implementation(libs.jetBrains.androidX.lifecycle.viewmodelCompose)
         }
-        androidMain.dependencies { implementation(libs.core.ktx) }
+        androidMain.dependencies { implementation(libs.androidX.core.ktx) }
     }
 }
 
