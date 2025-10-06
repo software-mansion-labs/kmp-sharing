@@ -8,9 +8,9 @@ import platform.UIKit.*
 
 @Composable
 @OptIn(ExperimentalForeignApi::class)
-public actual fun share(url: String, options: SharingOptions?): () -> Unit {
+public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Unit {
     return remember {
-        {
+        { url: String, options: SharingOptions? ->
             try {
                 val nsUrl = NSURL.URLWithString(url)
                 requireNotNull(nsUrl) { "Invalid URL: $url" }

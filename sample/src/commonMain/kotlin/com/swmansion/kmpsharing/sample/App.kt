@@ -19,23 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.swmansion.kmpsharing.SharingOptions
-import com.swmansion.kmpsharing.share
+import com.swmansion.kmpsharing.rememberShare
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
-    val shareFunction =
-        share(
-            // Remember: URL must start with "file://" and point to a file that
-            // exists on the device
-            url = "YOUR_LOCAL_URL",
-            options =
-                SharingOptions(
-                    androidDialogTitle = "Share Dog Image",
-                    androidMimeType = "image/jpeg",
-                ),
-        )
+    val share = rememberShare()
 
     MaterialTheme {
         Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
@@ -45,7 +35,17 @@ fun App() {
                 verticalArrangement = Arrangement.Center,
             ) {
                 Button(
-                    onClick = { shareFunction.invoke() },
+                    onClick = {
+                        share(
+                            // Remember: URL must start with "file://" and point to a file that
+                            // exists on the device
+                            "YOUR_LOCAL_URL",
+                            SharingOptions(
+                                androidDialogTitle = "Share Dog Image",
+                                androidMimeType = "image/jpeg",
+                            ),
+                        )
+                    },
                     modifier = Modifier.height(56.dp).width(200.dp),
                     colors =
                         ButtonDefaults.buttonColors(

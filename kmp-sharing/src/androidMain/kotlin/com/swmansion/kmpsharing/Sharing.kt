@@ -10,10 +10,10 @@ import java.io.File
 import java.net.URLConnection
 
 @Composable
-public actual fun share(url: String, options: SharingOptions?): () -> Unit {
+public actual fun rememberShare(): (url: String, options: SharingOptions?) -> Unit {
     val context = LocalContext.current
     return remember {
-        {
+        { url: String, options: SharingOptions? ->
             try {
                 val file = getLocalFileFromUrl(url)
                 val contentUri =
