@@ -4,13 +4,9 @@ import androidx.compose.runtime.Composable
 
 /** Interface for sharing files */
 public interface Share {
-    /**
-     * Shares a file using the native sharing mechanism of the platform.
-     *
-     * @param url The file URL to share. Must be a local file URL (scheme: `file://`)
-     * @param options Optional sharing configuration for platform-specific customization
-     */
     public operator fun invoke(url: String, options: SharingOptions? = null)
+
+    public operator fun invoke(data: List<String>, options: SharingOptions? = null)
 }
 
 /**

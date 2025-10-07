@@ -12,11 +12,26 @@ import platform.UIKit.*
 public actual fun rememberShare(): Share = remember {
     object : Share {
         override fun invoke(url: String, options: SharingOptions?) {
-            try {
-                val nsUrl = NSURL.URLWithString(url)
-                requireNotNull(nsUrl) { "Invalid URL: $url" }
+            return invoke(data = listOf(url), options = options)
+        }
 
-                val activityItems = listOf(nsUrl)
+        override fun invoke(data: List<String>, options: SharingOptions?) {
+            try {
+                val activityItems =
+                    data.map { file ->
+                        when (getContentType(file)) {
+                            ContentType.FILE,
+                            ContentType.LINK -> {
+                                val nsUrl = NSURL.URLWithString(file)
+                                requireNotNull(nsUrl) { "Invalid URL: $file" }
+                                nsUrl
+                            }
+                            else -> {
+                                file
+                            }
+                        }
+                    }
+
                 val activityViewController =
                     UIActivityViewController(
                         activityItems = activityItems,
