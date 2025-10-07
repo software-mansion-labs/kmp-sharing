@@ -17,6 +17,8 @@ public actual fun rememberShare(): Share = remember {
 
         override fun invoke(data: List<String>, options: SharingOptions?) {
             try {
+                validateSharingConstraints(data)
+
                 val activityItems =
                     data.map { file ->
                         when (getContentType(file)) {

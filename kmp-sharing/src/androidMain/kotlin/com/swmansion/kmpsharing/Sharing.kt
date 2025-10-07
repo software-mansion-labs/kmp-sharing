@@ -19,6 +19,8 @@ public actual fun rememberShare(): Share {
 
             override fun invoke(data: List<String>, options: SharingOptions?) {
                 try {
+                    validateSharingConstraints(data)
+
                     val contentUris = mutableListOf<android.net.Uri>()
                     val textItems = mutableListOf<String>()
 
