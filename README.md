@@ -13,7 +13,7 @@ Check out the sample project in the `/sample` directory for complete usage examp
 ## ✨ Features
 
 * **Cross-platform compatibility** - Single API for both Android and iOS
-* **Native performance** - Uses Android Intent system and iOS UIActivityViewController
+* **Native performance** - Uses Android `Intent` system and iOS `UIActivityViewController`
 * **File sharing support** - Share local files with proper MIME type detection
 * **Customizable options** - Platform-specific customization options
 * **Compose integration** - Built with Compose Multiplatform for modern UI development
@@ -44,11 +44,11 @@ fun ShareButton() {
 
 ## 📚 Documentation
 
-Check out our [dedicated documentation page](google.com) for installation instructions, API reference and more.
+Check out our [dedicated documentation page](https://docs.swmansion.com/kmp-sharing) for installation instructions, the API reference, and more.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please feel free to submit a Pull Request.
+We welcome contributions! Please feel free to submit a pull request.
 
 ## KMP Sharing is created by Software Mansion
 

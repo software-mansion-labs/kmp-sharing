@@ -7,7 +7,7 @@ public interface Share {
     /**
      * Shares a file using the native sharing mechanism of the platform.
      *
-     * @param url The file URL to share. Must be a local file URL (scheme: "file://")
+     * @param url The file URL to share. Must be a local file URL (scheme: `file://`)
      * @param options Optional sharing configuration for platform-specific customization
      */
     public operator fun invoke(url: String, options: SharingOptions? = null)
@@ -57,9 +57,9 @@ public interface Share {
  * - `content://...` (content URIs)
  * - Relative paths without `file://` scheme
  *
- * @return A stable [Share] interface that can be invoked to share files
+ * @return A stable [Share] instance that can be invoked to share files
  * @throws IllegalArgumentException When the URL is invalid, file doesn't exist, or URL scheme is
- *   not "file://"
+ *   not `file://`
  * @throws RuntimeException When the sharing operation fails due to platform-specific errors
  */
 @Composable public expect fun rememberShare(): Share
