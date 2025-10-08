@@ -1,5 +1,9 @@
 # KMP Sharing by Software Mansion
 
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.20-blue.svg)](https://kotlinlang.org)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Maven Central](https://img.shields.io/maven-central/v/com.swmansion.kmpsharing/kmp-sharing)](https://central.sonatype.com/artifact/com.swmansion.kmpsharing/kmp-sharing)
+
 Universal sharing function for Compose Multiplatform.
 
 ## 🎯 See It in Action
