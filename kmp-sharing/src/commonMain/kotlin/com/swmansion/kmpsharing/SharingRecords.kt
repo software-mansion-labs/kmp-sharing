@@ -24,3 +24,10 @@ public data class SharingOptions(
  * @param y _y_-coordinate of the anchor rectangle in points
  */
 public data class Anchor(val height: Float, val width: Float, val x: Float, val y: Float)
+
+/** Represents the content type of a file. */
+internal enum class ContentType {
+    FILE,
+    LINK,
+    TEXT,
+}

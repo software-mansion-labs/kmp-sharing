@@ -37,14 +37,9 @@ fun App() {
                 Button(
                     onClick = {
                         share(
-                            // Remember: URL must start with "file://" and point to a file that
-                            // exists on the device
-                            url = "YOUR_LOCAL_URL",
-                            options =
-                                SharingOptions(
-                                    androidDialogTitle = "Share Dog Image",
-                                    androidMimeType = "image/jpeg",
-                                ),
+                            data =
+                                "https://blog.swmansion.com/reanimated-4-stable-release-the-future-of-react-native-animations-ba68210c3713",
+                            options = SharingOptions(androidDialogTitle = "Software Mansion Blog"),
                         )
                     },
                     modifier = Modifier.height(56.dp).width(200.dp),

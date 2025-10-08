@@ -7,38 +7,69 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import java.io.File
-import java.net.URLConnection
 
+/** Implementation of [rememberShare] function on Android */
 @Composable
 public actual fun rememberShare(): Share {
     val context = LocalContext.current
     return remember {
         object : Share {
-            override fun invoke(url: String, options: SharingOptions?) {
+            override fun invoke(data: List<String>, options: SharingOptions?) {
                 try {
-                    val file = getLocalFileFromUrl(url)
-                    val contentUri =
-                        FileProvider.getUriForFile(
-                            context,
-                            "${context.packageName}.fileprovider",
-                            file,
-                        )
+                    validateSharingConstraints(data)
 
-                    val mimeType =
-                        options?.androidMimeType
-                            ?: URLConnection.guessContentTypeFromName(file.name)
-                            ?: "*/*"
+                    val contentUris = mutableListOf<android.net.Uri>()
+                    val textItems = mutableListOf<String>()
 
-                    val intent =
-                        Intent(Intent.ACTION_SEND).apply {
-                            putExtra(Intent.EXTRA_STREAM, contentUri)
-                            setTypeAndNormalize(mimeType)
-                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-                            options?.androidDialogTitle?.let { title ->
-                                putExtra(Intent.EXTRA_TEXT, title)
+                    data.forEach { file ->
+                        when (getContentType(file)) {
+                            ContentType.FILE -> {
+                                val fileObj = getLocalFileFromUrl(file)
+                                val contentUri =
+                                    FileProvider.getUriForFile(
+                                        context,
+                                        "${context.packageName}.fileprovider",
+                                        fileObj,
+                                    )
+                                contentUris.add(contentUri)
+                            }
+                            ContentType.LINK,
+                            ContentType.TEXT -> {
+                                textItems.add(file)
                             }
                         }
+                    }
+
+                    val intent =
+                        Intent(
+                            if (contentUris.size > 1) Intent.ACTION_SEND_MULTIPLE
+                            else Intent.ACTION_SEND
+                        )
+
+                    if (contentUris.isNotEmpty()) {
+                        if (contentUris.size == 1) {
+                            intent.putExtra(Intent.EXTRA_STREAM, contentUris[0])
+                        } else {
+                            intent.putParcelableArrayListExtra(
+                                Intent.EXTRA_STREAM,
+                                ArrayList(contentUris),
+                            )
+                        }
+
+                        val mimeType = options?.androidMimeType ?: "image/*"
+                        intent.setTypeAndNormalize(mimeType)
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    } else {
+                        intent.setTypeAndNormalize("text/plain")
+                    }
+
+                    if (textItems.isNotEmpty()) {
+                        intent.putExtra(Intent.EXTRA_TEXT, textItems.joinToString("\n"))
+                    }
+
+                    options?.androidDialogTitle?.let { title ->
+                        intent.putExtra(Intent.EXTRA_TITLE, title)
+                    }
 
                     context.startActivity(
                         Intent.createChooser(intent, options?.androidDialogTitle ?: "Share")
