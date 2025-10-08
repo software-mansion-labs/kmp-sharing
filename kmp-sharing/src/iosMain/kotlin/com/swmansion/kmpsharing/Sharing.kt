@@ -7,7 +7,7 @@ import platform.CoreGraphics.CGRectMake
 import platform.Foundation.*
 import platform.UIKit.*
 
-/** Implementation [rememberShare] function on iOS */
+/** Implementation of [rememberShare] function on iOS */
 @Composable
 @OptIn(ExperimentalForeignApi::class)
 public actual fun rememberShare(): Share = remember {

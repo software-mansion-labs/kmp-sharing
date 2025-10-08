@@ -26,7 +26,7 @@ public data class SharingOptions(
 public data class Anchor(val height: Float, val width: Float, val x: Float, val y: Float)
 
 /** Represents the content type of a file. */
-public enum class ContentType {
+internal enum class ContentType {
     FILE,
     LINK,
     TEXT,

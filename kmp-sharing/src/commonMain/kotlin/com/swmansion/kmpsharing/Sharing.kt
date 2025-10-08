@@ -7,11 +7,12 @@ public interface Share {
     /**
      * Share URL, text, or file using the specified options.
      *
-     * @param url URL, text, or file to be shared
+     * @param data URL, text, or file to be shared
      * @param options Configuration options for sharing
      */
-    public operator fun invoke(url: String, options: SharingOptions? = null): Unit =
-        invoke(listOf(url), options)
+    public operator fun invoke(data: String, options: SharingOptions? = null) {
+        invoke(listOf(data), options)
+    }
 
     /**
      * Share a list of URL, text, or files using the specified options.

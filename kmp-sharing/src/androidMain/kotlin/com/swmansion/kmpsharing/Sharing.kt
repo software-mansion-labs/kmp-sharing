@@ -8,7 +8,7 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import java.io.File
 
-/** Implementation [rememberShare] function on Android */
+/** Implementation of [rememberShare] function on Android */
 @Composable
 public actual fun rememberShare(): Share {
     val context = LocalContext.current
