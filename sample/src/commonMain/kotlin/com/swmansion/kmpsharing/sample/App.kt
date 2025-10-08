@@ -37,7 +37,7 @@ fun App() {
                 Button(
                     onClick = {
                         share(
-                            url =
+                            link =
                                 "https://blog.swmansion.com/reanimated-4-stable-release-the-future-of-react-native-animations-ba68210c3713",
                             options = SharingOptions(androidDialogTitle = "Software Mansion Blog"),
                         )

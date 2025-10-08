@@ -13,34 +13,19 @@ public actual fun rememberShare(): Share {
     val context = LocalContext.current
     return remember {
         object : Share {
-            override fun invoke(url: String, options: SharingOptions?) {
-                return invoke(data = listOf(url), options = options)
-            }
-
-            override fun invoke(data: List<String>, options: SharingOptions?) {
+            override fun invoke(files: List<String>, text: String?, options: SharingOptions?) {
                 try {
-                    validateSharingConstraints(data)
-
                     val contentUris = mutableListOf<android.net.Uri>()
-                    val textItems = mutableListOf<String>()
 
-                    data.forEach { file ->
-                        when (getContentType(file)) {
-                            ContentType.FILE -> {
-                                val fileObj = getLocalFileFromUrl(file)
-                                val contentUri =
-                                    FileProvider.getUriForFile(
-                                        context,
-                                        "${context.packageName}.fileprovider",
-                                        fileObj,
-                                    )
-                                contentUris.add(contentUri)
-                            }
-                            ContentType.LINK,
-                            ContentType.TEXT -> {
-                                textItems.add(file)
-                            }
-                        }
+                    files.forEach { file ->
+                        val fileObj = getLocalFileFromUrl(file)
+                        val contentUri =
+                            FileProvider.getUriForFile(
+                                context,
+                                "${context.packageName}.fileprovider",
+                                fileObj,
+                            )
+                        contentUris.add(contentUri)
                     }
 
                     val intent =
@@ -66,8 +51,8 @@ public actual fun rememberShare(): Share {
                         intent.setTypeAndNormalize("text/plain")
                     }
 
-                    if (textItems.isNotEmpty()) {
-                        intent.putExtra(Intent.EXTRA_TEXT, textItems.joinToString("\n"))
+                    if (text?.isNotEmpty() == true) {
+                        intent.putExtra(Intent.EXTRA_TEXT, text)
                     }
 
                     options?.androidDialogTitle?.let { title ->

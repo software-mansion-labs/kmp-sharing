@@ -11,28 +11,27 @@ import platform.UIKit.*
 @OptIn(ExperimentalForeignApi::class)
 public actual fun rememberShare(): Share = remember {
     object : Share {
-        override fun invoke(url: String, options: SharingOptions?) {
-            return invoke(data = listOf(url), options = options)
-        }
-
-        override fun invoke(data: List<String>, options: SharingOptions?) {
+        override fun invoke(files: List<String>, text: String?, options: SharingOptions?) {
             try {
-                validateSharingConstraints(data)
+                val activityItems = mutableListOf<Any>()
 
-                val activityItems =
-                    data.map { file ->
-                        when (getContentType(file)) {
-                            ContentType.FILE,
-                            ContentType.LINK -> {
-                                val nsUrl = NSURL.URLWithString(file)
-                                requireNotNull(nsUrl) { "Invalid URL: $file" }
-                                nsUrl
-                            }
-                            else -> {
-                                file
-                            }
+                files.forEach { file ->
+                    val nsUrl = NSURL.URLWithString(file)
+                    requireNotNull(nsUrl) { "Invalid URL: $file" }
+                    activityItems.add(activityItems)
+                }
+
+                text?.let { linkOrText ->
+                    when (getContentType(text)) {
+                        ContentType.LINK -> {
+                            val nsUrl = NSURL.URLWithString(text)
+                            requireNotNull(nsUrl) { "Invalid URL: $text" }
+                            activityItems.add(nsUrl)
                         }
+                        ContentType.TEXT -> activityItems.add(text)
+                        else -> null
                     }
+                }
 
                 val activityViewController =
                     UIActivityViewController(

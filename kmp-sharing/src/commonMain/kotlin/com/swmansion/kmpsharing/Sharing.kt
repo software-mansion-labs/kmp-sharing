@@ -4,9 +4,32 @@ import androidx.compose.runtime.Composable
 
 /** Interface for sharing files */
 public interface Share {
-    public operator fun invoke(url: String, options: SharingOptions? = null)
+    public operator fun invoke(text: String?, options: SharingOptions? = null): Unit =
+        invoke(emptyList(), text, options)
 
-    public operator fun invoke(data: List<String>, options: SharingOptions? = null)
+    public operator fun invoke(link: String, options: SharingOptions? = null): Unit =
+        invoke(emptyList(), link, options)
+
+    public operator fun invoke(file: String, link: String, options: SharingOptions? = null): Unit =
+        invoke(listOf(file), link, options)
+
+    public operator fun invoke(
+        file: String,
+        text: String? = null,
+        options: SharingOptions? = null,
+    ): Unit = invoke(listOf(file), text, options)
+
+    public operator fun invoke(
+        files: List<String>,
+        link: String,
+        options: SharingOptions? = null,
+    ): Unit = invoke(files, link.ifEmpty { null }, options)
+
+    public operator fun invoke(
+        files: List<String>,
+        text: String? = null,
+        options: SharingOptions? = null,
+    )
 }
 
 /**

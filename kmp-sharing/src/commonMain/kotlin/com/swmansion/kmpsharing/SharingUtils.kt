@@ -9,29 +9,3 @@ internal fun getContentType(content: String): ContentType {
         else -> ContentType.TEXT
     }
 }
-
-internal fun validateSharingConstraints(files: List<String>) {
-    var fileCount = 0
-    var urlCount = 0
-    var textCount = 0
-
-    files.forEach { file ->
-        when (getContentType(file)) {
-            ContentType.FILE -> fileCount++
-            ContentType.LINK -> urlCount++
-            ContentType.TEXT -> textCount++
-        }
-    }
-
-    if (urlCount > 1) {
-        throw IllegalArgumentException("Only one URL is allowed per share operation")
-    }
-
-    if (textCount > 1) {
-        throw IllegalArgumentException("Only one text item is allowed per share operation")
-    }
-
-    if (urlCount > 0 && textCount > 0) {
-        throw IllegalArgumentException("URL and text cannot be shared together")
-    }
-}
