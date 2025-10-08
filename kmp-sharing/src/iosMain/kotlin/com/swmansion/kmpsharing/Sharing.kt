@@ -7,14 +7,11 @@ import platform.CoreGraphics.CGRectMake
 import platform.Foundation.*
 import platform.UIKit.*
 
+/** Implementation [rememberShare] function on iOS */
 @Composable
 @OptIn(ExperimentalForeignApi::class)
 public actual fun rememberShare(): Share = remember {
     object : Share {
-        override fun invoke(url: String, options: SharingOptions?) {
-            return invoke(data = listOf(url), options = options)
-        }
-
         override fun invoke(data: List<String>, options: SharingOptions?) {
             try {
                 validateSharingConstraints(data)

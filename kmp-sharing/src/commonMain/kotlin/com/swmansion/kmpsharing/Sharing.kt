@@ -4,8 +4,21 @@ import androidx.compose.runtime.Composable
 
 /** Interface for sharing files */
 public interface Share {
-    public operator fun invoke(url: String, options: SharingOptions? = null)
+    /**
+     * Share URL, text, or file using the specified options.
+     *
+     * @param url URL, text, or file to be shared
+     * @param options Configuration options for sharing
+     */
+    public operator fun invoke(url: String, options: SharingOptions? = null): Unit =
+        invoke(listOf(url), options)
 
+    /**
+     * Share a list of URL, text, or files using the specified options.
+     *
+     * @param data List of URL, text, or files to be shared
+     * @param options Configuration options for sharing
+     */
     public operator fun invoke(data: List<String>, options: SharingOptions? = null)
 }
 

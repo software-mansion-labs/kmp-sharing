@@ -8,15 +8,12 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import java.io.File
 
+/** Implementation [rememberShare] function on Android */
 @Composable
 public actual fun rememberShare(): Share {
     val context = LocalContext.current
     return remember {
         object : Share {
-            override fun invoke(url: String, options: SharingOptions?) {
-                return invoke(data = listOf(url), options = options)
-            }
-
             override fun invoke(data: List<String>, options: SharingOptions?) {
                 try {
                     validateSharingConstraints(data)

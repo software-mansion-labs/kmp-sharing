@@ -1,5 +1,10 @@
 package com.swmansion.kmpsharing
 
+/**
+ * Returns information about the [ContentType] for the specified file.
+ *
+ * @param content The URL, raw text or path of the file.
+ */
 internal fun getContentType(content: String): ContentType {
     val trimmed = content.trim()
 
@@ -10,6 +15,11 @@ internal fun getContentType(content: String): ContentType {
     }
 }
 
+/**
+ * Validates the sharing constraints for the given files.
+ *
+ * @param files The list of files to be shared.
+ */
 internal fun validateSharingConstraints(files: List<String>) {
     var fileCount = 0
     var urlCount = 0
