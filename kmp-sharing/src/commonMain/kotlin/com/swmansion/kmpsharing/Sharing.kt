@@ -14,8 +14,10 @@ public interface Share {
         invoke(listOf(url), options)
 
     /**
-     * Share a list of URL, text, or files using the specified options. Note: [data] parameter
-     * restrictions: maximum one URL OR one text item (not both), but multiple files are permitted.
+     * Share a list of URL, text, or files using the specified options.
+     *
+     * Note: [data] parameter restrictions: maximum one URL OR one text item (not both), but
+     * multiple files are permitted.
      *
      * @param data List of URL, text, or files to be shared
      * @param options Configuration options for sharing
