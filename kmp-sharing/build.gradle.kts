@@ -1,17 +1,20 @@
 group = "com.swmansion.kmpsharing"
 
+version = "0.1.0"
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetBrains.compose)
     alias(libs.plugins.jetBrains.dokka)
     alias(libs.plugins.jetBrains.kotlin.multiplatform)
     alias(libs.plugins.jetBrains.kotlin.plugin.compose)
+    alias(libs.plugins.vanniktech.maven.publish)
 }
 
 kotlin {
     explicitApi()
     jvmToolchain(17)
-    androidTarget()
+    androidTarget { publishLibraryVariants("release") }
 
     compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
 
@@ -66,5 +69,43 @@ dokka {
             All trademarks and copyrights belong to their respective owners.
             """
                 .trimIndent()
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+    pom {
+        name = "KMP Sharing"
+        description = "Universal sharing function for Compose Multiplatform."
+        url = "https://github.com/software-mansion-labs/kmp-sharing"
+        licenses {
+            license {
+                name = "The MIT License"
+                url = "http://www.opensource.org/licenses/mit-license.php"
+            }
+        }
+        scm {
+            connection = "scm:git:git://github.com/software-mansion-labs/kmp-sharing.git"
+            developerConnection = "scm:git:ssh://github.com/software-mansion-labs/kmp-sharing.git"
+            url = "https://github.com/software-mansion-labs/kmp-sharing"
+        }
+        developers {
+            developer {
+                id = "arturgesiarz"
+                name = "Artur Gęsiarz"
+                email = "artur.gesiarz@swmansion.com"
+            }
+            developer {
+                id = "marekkaput"
+                name = "Marek Kaput"
+                email = "marek.kaput@swmansion.com"
+            }
+            developer {
+                id = "patrickmichalik"
+                name = "Patrick Michalik"
+                email = "patrick.michalik@swmansion.com"
+            }
+        }
     }
 }
