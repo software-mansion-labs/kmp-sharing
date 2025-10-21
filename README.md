@@ -1,4 +1,4 @@
-![KMP Maps by Software Mansion](https://github.com/user-attachments/assets/849e1454-f632-4c7a-a14b-56f076200750)
+![KMP Sharing by Software Mansion](https://github.com/user-attachments/assets/849e1454-f632-4c7a-a14b-56f076200750)
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.20-blue.svg)](https://kotlinlang.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
