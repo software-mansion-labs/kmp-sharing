@@ -1,4 +1,4 @@
-# KMP Sharing by Software Mansion
+![KMP Sharing by Software Mansion](https://github.com/software-mansion/kmp-sharing/blob/main/docs/images/cover_image.png?raw=true)
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.20-blue.svg)](https://kotlinlang.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
