@@ -23,7 +23,7 @@ public actual fun rememberShare(): Share {
 
                     data.forEach { file ->
                         when (getContentType(file)) {
-                            ContentType.FILE -> {
+                            DataType.FILE -> {
                                 val fileObj = getLocalFileFromUrl(file)
                                 val contentUri =
                                     FileProvider.getUriForFile(
@@ -33,11 +33,11 @@ public actual fun rememberShare(): Share {
                                     )
                                 contentUris.add(contentUri)
                             }
-                            ContentType.CONTENT -> {
+                            DataType.CONTENT -> {
                                 contentUris.add(file.toUri())
                             }
-                            ContentType.LINK,
-                            ContentType.TEXT -> {
+                            DataType.LINK,
+                            DataType.TEXT -> {
                                 textItems.add(file)
                             }
                         }

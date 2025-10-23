@@ -46,14 +46,14 @@ fun ShareButton() {
 }
 ```
 
-## 📦 Instalation
+## 📦 Installation
 
-For installation instructions visit our [dedicated documentation page](https://docs.swmansion.com/kmp-sharing/).
+For installation instructions visit our [dedicated document](https://github.com/software-mansion/kmp-sharing/blob/main/docs/INSTALLATION_SETUP.md).
 
 
-## 📚 Documentation
+## 📚 API Reference
 
-Check out our [dedicated documentation page](https://docs.swmansion.com/kmp-sharing/) for the API reference, and more.
+Check out our [dedicated documentation page](https://docs.swmansion.com/kmp-sharing/) for the API reference.
 
 ## 🤝 Contributing
 
