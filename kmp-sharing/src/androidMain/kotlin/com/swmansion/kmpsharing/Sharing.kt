@@ -62,6 +62,7 @@ public actual fun rememberShare(): Share {
                         val mimeType = options?.androidMimeType ?: "image/*"
                         intent.setTypeAndNormalize(mimeType)
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        intent.data = contentUris[0]
                     } else {
                         intent.setTypeAndNormalize("text/plain")
                     }
