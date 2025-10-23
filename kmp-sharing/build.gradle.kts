@@ -52,16 +52,7 @@ android {
 }
 
 dokka {
-    dokkaSourceSets {
-        configureEach {
-            moduleName = "KMP Sharing"
-            externalDocumentationLinks {
-                register("coroutines") { url("https://kotlinlang.org/api/kotlinx.coroutines") }
-            }
-            includes.from("$rootDir/docs/QUICK_START.md")
-        }
-    }
-
+    moduleName = "KMP Sharing"
     pluginsConfiguration.html {
         footerMessage =
             """

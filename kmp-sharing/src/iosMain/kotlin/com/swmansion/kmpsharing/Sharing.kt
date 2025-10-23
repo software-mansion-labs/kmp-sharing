@@ -19,8 +19,8 @@ public actual fun rememberShare(): Share = remember {
                 val activityItems =
                     data.map { file ->
                         when (getContentType(file)) {
-                            ContentType.FILE,
-                            ContentType.LINK -> {
+                            DataType.FILE,
+                            DataType.LINK -> {
                                 val nsUrl = NSURL.URLWithString(file)
                                 requireNotNull(nsUrl) { "Invalid URL: $file" }
                                 nsUrl

@@ -59,15 +59,14 @@ public interface Share {
  *
  * ## File URL Requirements
  *
- * The returned function only supports local file URLs with the `file://` scheme:
+ * The returned function supports local file URLs with the `file://` and `content://` scheme:
  *
  * **Supported:**
  * - `file:///storage/emulated/0/Pictures/image.jpg`
- * - `file:///var/mobile/Containers/Data/Application/Documents/file.pdf`
+ * - `content://media/external_primary/images/media/1000002137`
  *
  * **Not Supported:**
  * - `https://example.com/file.jpg` (remote URLs)
- * - `content://...` (content URIs)
  * - Relative paths without `file://` scheme
  *
  * @return A stable [Share] instance that can be invoked to share files
