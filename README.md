@@ -32,7 +32,7 @@ fun ShareButton() {
     Button(
         onClick = {
             share(
-                url = "file:///path/to/your/file.jpg",
+                data = "file:///path/to/your/file.jpg",
                 options = SharingOptions(
                     androidDialogTitle = "Share Image",
                     androidMimeType = "image/jpeg",
