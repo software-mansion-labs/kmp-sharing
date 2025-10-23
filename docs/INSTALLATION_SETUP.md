@@ -6,7 +6,7 @@ First, add the library to your `gradle/libs.versions.toml` file:
 
 ```toml
 [versions]
-kmpSharing = "0.1.0"
+kmpSharing = "0.2.0"
 
 [libraries]
 swmansion-kmpSharing = { module = "com.swmansion.kmpsharing:kmp-sharing", version.ref = "kmpSharing" }
@@ -26,6 +26,6 @@ If you're not using Gradle version catalogs, you can add the library directly to
 
 ```kotlin
 dependencies {
-    implementation("com.swmansion.kmpsharing:kmp-sharing:0.1.0")
+    implementation("com.swmansion.kmpsharing:kmp-sharing:0.2.0")
 }
 ```
