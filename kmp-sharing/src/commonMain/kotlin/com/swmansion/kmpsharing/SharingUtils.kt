@@ -1,18 +1,18 @@
 package com.swmansion.kmpsharing
 
 /**
- * Returns information about the [ContentType] for the specified file.
+ * Returns information about the [DataType] for the specified file.
  *
  * @param content The URL, raw text or path of the file.
  */
-internal fun getContentType(content: String): ContentType {
+internal fun getContentType(content: String): DataType {
     val trimmed = content.trim()
 
     return when {
-        trimmed.startsWith("file://") -> ContentType.FILE
-        trimmed.startsWith("content://") -> ContentType.CONTENT
-        trimmed.startsWith("http://") || trimmed.startsWith("https://") -> ContentType.LINK
-        else -> ContentType.TEXT
+        trimmed.startsWith("file://") -> DataType.FILE
+        trimmed.startsWith("content://") -> DataType.CONTENT
+        trimmed.startsWith("http://") || trimmed.startsWith("https://") -> DataType.LINK
+        else -> DataType.TEXT
     }
 }
 
@@ -27,10 +27,10 @@ internal fun validateSharingConstraints(files: List<String>) {
 
     files.forEach { file ->
         when (getContentType(file)) {
-            ContentType.LINK -> urlCount++
-            ContentType.TEXT -> textCount++
-            ContentType.FILE,
-            ContentType.CONTENT -> Unit
+            DataType.LINK -> urlCount++
+            DataType.TEXT -> textCount++
+            DataType.FILE,
+            DataType.CONTENT -> Unit
         }
     }
 
