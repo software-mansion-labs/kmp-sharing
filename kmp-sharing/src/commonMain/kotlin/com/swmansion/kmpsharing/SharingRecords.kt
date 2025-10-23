@@ -7,12 +7,14 @@ package com.swmansion.kmpsharing
  * @param iosUTI iOS Uniform Type Identifier for file type recognition
  * @param androidDialogTitle Title for Android share dialog
  * @param androidMimeType MIME type override for Android (auto-detected if null)
+ * @param androidPreviewData Rich content preview image path for Android (auto-detected if null)
  */
 public data class SharingOptions(
     val iosAnchor: Anchor? = null,
     val iosUTI: String? = null,
     val androidDialogTitle: String? = null,
     val androidMimeType: String? = null,
+    val androidPreviewData: String? = null,
 )
 
 /**
