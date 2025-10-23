@@ -10,6 +10,7 @@ internal fun getContentType(content: String): ContentType {
 
     return when {
         trimmed.startsWith("file://") -> ContentType.FILE
+        trimmed.startsWith("content://") -> ContentType.CONTENT
         trimmed.startsWith("http://") || trimmed.startsWith("https://") -> ContentType.LINK
         else -> ContentType.TEXT
     }
@@ -21,15 +22,15 @@ internal fun getContentType(content: String): ContentType {
  * @param files The list of files to be shared.
  */
 internal fun validateSharingConstraints(files: List<String>) {
-    var fileCount = 0
     var urlCount = 0
     var textCount = 0
 
     files.forEach { file ->
         when (getContentType(file)) {
-            ContentType.FILE -> fileCount++
             ContentType.LINK -> urlCount++
             ContentType.TEXT -> textCount++
+            ContentType.FILE,
+            ContentType.CONTENT -> Unit
         }
     }
 

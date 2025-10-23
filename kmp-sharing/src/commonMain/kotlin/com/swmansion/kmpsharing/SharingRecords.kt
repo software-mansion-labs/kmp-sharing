@@ -28,6 +28,7 @@ public data class Anchor(val height: Float, val width: Float, val x: Float, val 
 /** Represents the content type of a file. */
 internal enum class ContentType {
     FILE,
+    CONTENT,
     LINK,
     TEXT,
 }

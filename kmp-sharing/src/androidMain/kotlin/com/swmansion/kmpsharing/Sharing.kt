@@ -33,6 +33,9 @@ public actual fun rememberShare(): Share {
                                     )
                                 contentUris.add(contentUri)
                             }
+                            ContentType.CONTENT -> {
+                                contentUris.add(file.toUri())
+                            }
                             ContentType.LINK,
                             ContentType.TEXT -> {
                                 textItems.add(file)
