@@ -61,15 +61,15 @@ public actual fun rememberShare(): Share {
                             )
                         }
 
-                        val mimeType = options?.androidMimeType ?: "image/*"
-                        require(options?.androidPreviewData == null) {
+                        val mimeType = options?.android?.mimeType ?: "image/*"
+                        require(options?.android?.previewData == null) {
                             "Custom preview data is not supported for sharing images."
                         }
                         intent.setTypeAndNormalize(mimeType)
                         intent.data = contentUris[0]
                     } else {
                         intent.setTypeAndNormalize("text/plain")
-                        options?.androidPreviewData?.let { previewData ->
+                        options?.android?.previewData?.let { previewData ->
                             val previewUri =
                                 when (getContentType(previewData)) {
                                     DataType.FILE -> {
@@ -101,12 +101,12 @@ public actual fun rememberShare(): Share {
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
 
-                    options?.androidDialogTitle?.let { title ->
+                    options?.android?.dialogTitle?.let { title ->
                         intent.putExtra(Intent.EXTRA_TITLE, title)
                     }
 
                     context.startActivity(
-                        Intent.createChooser(intent, options?.androidDialogTitle ?: "Share")
+                        Intent.createChooser(intent, options?.android?.dialogTitle ?: "Share")
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     )
                 } catch (e: Exception) {

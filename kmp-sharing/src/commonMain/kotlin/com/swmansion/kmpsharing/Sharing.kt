@@ -45,9 +45,8 @@ public interface Share {
  *             share(
  *                 url = "file:///path/to/your/file.jpg",
  *                 options = SharingOptions(
- *                     androidDialogTitle = "Share Image",
- *                     androidMimeType = "image/jpeg",
- *                     iosAnchor = Anchor(x = 100f, y = 100f, width = 200f, height = 50f)
+ *                     android = AndroidSharingOptions(dialogTitle = "Share Image", mimeType = "image/jpeg"),
+ *                     ios = IosSharingOptions(anchor = Anchor(x = 100f, y = 100f, width = 200f, height = 50f))
  *                 )
  *             )
  *         }

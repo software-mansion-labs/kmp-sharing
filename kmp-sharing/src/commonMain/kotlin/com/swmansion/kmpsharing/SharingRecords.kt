@@ -1,20 +1,35 @@
 package com.swmansion.kmpsharing
 
 /**
+ * Platform-specific configuration for Android sharing.
+ *
+ * @param dialogTitle Title for Android share dialog
+ * @param mimeType MIME type override for Android (auto-detected if null)
+ * @param previewData Preview image path for Android URL and text sharing
+ */
+public data class AndroidSharingOptions(
+    val dialogTitle: String? = null,
+    val mimeType: String? = null,
+    val previewData: String? = null,
+)
+
+/**
+ * Platform-specific configuration for iOS sharing.
+ *
+ * @param anchor Position and size for iOS popover presentation (iPad only)
+ * @param uti Uniform Type Identifier for file type recognition
+ */
+public data class IosSharingOptions(val anchor: Anchor? = null, val uti: String? = null)
+
+/**
  * Configuration options for sharing behavior across platforms.
  *
- * @param iosAnchor Position and size for iOS popover presentation (iPad only)
- * @param iosUTI iOS Uniform Type Identifier for file type recognition
- * @param androidDialogTitle Title for Android share dialog
- * @param androidMimeType MIME type override for Android (auto-detected if null)
- * @param androidPreviewData Preview image path for Android URL and text sharing
+ * @param android Platform-specific options for Android
+ * @param ios Platform-specific options for iOS
  */
 public data class SharingOptions(
-    val iosAnchor: Anchor? = null,
-    val iosUTI: String? = null,
-    val androidDialogTitle: String? = null,
-    val androidMimeType: String? = null,
-    val androidPreviewData: String? = null,
+    val android: AndroidSharingOptions? = null,
+    val ios: IosSharingOptions? = null,
 )
 
 /**
