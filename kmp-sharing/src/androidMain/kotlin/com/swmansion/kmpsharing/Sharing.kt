@@ -50,7 +50,6 @@ public actual fun rememberShare(): Share {
                             if (contentUris.size > 1) Intent.ACTION_SEND_MULTIPLE
                             else Intent.ACTION_SEND
                         )
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
                     if (contentUris.isNotEmpty()) {
                         if (contentUris.size == 1) {
@@ -96,6 +95,10 @@ public actual fun rememberShare(): Share {
 
                     if (textItems.isNotEmpty()) {
                         intent.putExtra(Intent.EXTRA_TEXT, textItems.joinToString("\n"))
+                    }
+
+                    if (intent.data != null || intent.clipData != null) {
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
 
                     options?.androidDialogTitle?.let { title ->
