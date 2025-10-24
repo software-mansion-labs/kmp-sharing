@@ -1,6 +1,8 @@
 package com.swmansion.kmpsharing
 
+import android.content.ClipData
 import android.content.Intent
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -18,7 +20,7 @@ public actual fun rememberShare(): Share {
                 try {
                     validateSharingConstraints(data)
 
-                    val contentUris = mutableListOf<android.net.Uri>()
+                    val contentUris = mutableListOf<Uri>()
                     val textItems = mutableListOf<String>()
 
                     data.forEach { file ->
@@ -60,14 +62,43 @@ public actual fun rememberShare(): Share {
                         }
 
                         val mimeType = options?.androidMimeType ?: "image/*"
+                        require(options?.androidPreviewData == null) {
+                            "Custom preview data is not supported for sharing images."
+                        }
                         intent.setTypeAndNormalize(mimeType)
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        intent.data = contentUris[0]
                     } else {
                         intent.setTypeAndNormalize("text/plain")
+                        options?.androidPreviewData?.let { previewData ->
+                            val previewUri =
+                                when (getContentType(previewData)) {
+                                    DataType.FILE -> {
+                                        val fileObj = getLocalFileFromUrl(previewData)
+                                        FileProvider.getUriForFile(
+                                            context,
+                                            "${context.packageName}.fileprovider",
+                                            fileObj,
+                                        )
+                                    }
+                                    DataType.CONTENT -> {
+                                        previewData.toUri()
+                                    }
+                                    else ->
+                                        throw IllegalArgumentException(
+                                            "Unsupported preview data type: $previewData"
+                                        )
+                                }
+                            val clipData = ClipData.newRawUri(null, previewUri)
+                            intent.clipData = clipData
+                        }
                     }
 
                     if (textItems.isNotEmpty()) {
                         intent.putExtra(Intent.EXTRA_TEXT, textItems.joinToString("\n"))
+                    }
+
+                    if (intent.data != null || intent.clipData != null) {
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     }
 
                     options?.androidDialogTitle?.let { title ->
