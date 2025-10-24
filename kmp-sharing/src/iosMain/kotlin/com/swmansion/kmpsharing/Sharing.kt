@@ -38,7 +38,7 @@ public actual fun rememberShare(): Share = remember {
                     )
 
                 val anchor =
-                    options?.iosAnchor
+                    options?.ios?.anchor
                         ?: run {
                             val screenBounds = UIScreen.mainScreen.bounds
                             screenBounds.useContents {

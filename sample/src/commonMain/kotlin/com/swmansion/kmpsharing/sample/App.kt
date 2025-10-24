@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.swmansion.kmpsharing.AndroidSharingOptions
 import com.swmansion.kmpsharing.SharingOptions
 import com.swmansion.kmpsharing.rememberShare
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -39,7 +40,11 @@ fun App() {
                         share(
                             data =
                                 "https://blog.swmansion.com/reanimated-4-stable-release-the-future-of-react-native-animations-ba68210c3713",
-                            options = SharingOptions(androidDialogTitle = "Software Mansion Blog"),
+                            options =
+                                SharingOptions(
+                                    android =
+                                        AndroidSharingOptions(dialogTitle = "Software Mansion Blog")
+                                ),
                         )
                     },
                     modifier = Modifier.height(56.dp).width(200.dp),
