@@ -71,14 +71,25 @@ public actual fun rememberShare(): Share {
                     } else {
                         intent.setTypeAndNormalize("text/plain")
                         options?.androidPreviewData?.let { previewData ->
-                            val fileObj = getLocalFileFromUrl(previewData)
-                            val contentUri =
-                                FileProvider.getUriForFile(
-                                    context,
-                                    "${context.packageName}.fileprovider",
-                                    fileObj,
-                                )
-                            val clipData = ClipData.newRawUri(null, contentUri)
+                            val previewUri =
+                                when (getContentType(previewData)) {
+                                    DataType.FILE -> {
+                                        val fileObj = getLocalFileFromUrl(previewData)
+                                        FileProvider.getUriForFile(
+                                            context,
+                                            "${context.packageName}.fileprovider",
+                                            fileObj,
+                                        )
+                                    }
+                                    DataType.CONTENT -> {
+                                        previewData.toUri()
+                                    }
+                                    else ->
+                                        throw IllegalArgumentException(
+                                            "Unsupported preview data type: $previewData"
+                                        )
+                                }
+                            val clipData = ClipData.newRawUri(null, previewUri)
                             intent.clipData = clipData
                         }
                     }
