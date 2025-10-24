@@ -22,17 +22,6 @@ public actual fun rememberShare(): Share {
 
                     val contentUris = mutableListOf<Uri>()
                     val textItems = mutableListOf<String>()
-                    var previewUri: Uri? = null
-
-                    options?.androidPreviewData?.let { previewData ->
-                        val fileObj = getLocalFileFromUrl(previewData)
-                        previewUri =
-                            FileProvider.getUriForFile(
-                                context,
-                                "${context.packageName}.fileprovider",
-                                fileObj,
-                            )
-                    }
 
                     data.forEach { file ->
                         when (getContentType(file)) {
@@ -74,12 +63,22 @@ public actual fun rememberShare(): Share {
                         }
 
                         val mimeType = options?.androidMimeType ?: "image/*"
+                        require(options?.androidPreviewData == null) {
+                            "Custom preview data is not supported for sharing images."
+                        }
                         intent.setTypeAndNormalize(mimeType)
-                        intent.data = previewUri ?: contentUris[0]
+                        intent.data = contentUris[0]
                     } else {
                         intent.setTypeAndNormalize("text/plain")
                         options?.androidPreviewData?.let { previewData ->
-                            val clipData = ClipData.newRawUri(null, previewUri)
+                            val fileObj = getLocalFileFromUrl(previewData)
+                            val contentUri =
+                                FileProvider.getUriForFile(
+                                    context,
+                                    "${context.packageName}.fileprovider",
+                                    fileObj,
+                                )
+                            val clipData = ClipData.newRawUri(null, contentUri)
                             intent.clipData = clipData
                         }
                     }
